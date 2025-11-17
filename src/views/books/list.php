@@ -1,12 +1,12 @@
 <?php require __DIR__ . '/../partials/header.php'; ?>
 
-<main class="min-h-screen bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 text-gray-900">
+<main class="min-h-screen bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 text-blue-900">
   <div class="p-10 max-w-5xl mx-auto">
-    <h1 class="text-4xl font-bold text-center mb-8">Llibres</h1>
+    <h1 class="text-4xl font-bold text-center mb-8">Els teus llibres</h1>
 
     <?php if(isset($_SESSION['user'])): ?>
       <div class="text-center mb-8">
-        <a href="/?url=books/create" class="inline-block bg-blue-600 hover:bg-blue-700 text-black font-semibold px-6 py-2 rounded-lg shadow-md transition transform hover:scale-105">
+        <a href="/?url=books/create" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition transform hover:scale-105">
           Afegir llibre
         </a>
       </div>
@@ -29,3 +29,5 @@
     </div>
   </div>
 </main>
+
+<?php require __DIR__ . '/../partials/footer.php'; ?>

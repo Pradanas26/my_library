@@ -8,42 +8,71 @@ if(!$book) {
 }
 ?>
 
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-blue-200 to-blue-300 p-6">
 
-<main class="min-h-screen bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white font-sans">
-  <div class="max-w-3xl mx-auto p-10">
-    <div class="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 hover:scale-[1.01] transition-transform">
-      
-      <h1 class="text-4xl font-bold text-yellow-300 mb-3"><?= htmlspecialchars($book['title']) ?></h1>
-      <p class="text-lg text-gray-200"><?= htmlspecialchars($book['author']) ?> — <?= htmlspecialchars($book['year']) ?></p>
+  <div class="bg-white/70 backdrop-blur-xl border border-white/40 p-10 rounded-3xl shadow-2xl w-full max-w-3xl">
 
-      <h2 class="mt-8 text-2xl font-semibold text-yellow-200">Comentaris</h2>
-      <div class="mt-4 space-y-3">
-        <?php if(!empty($comments)): ?>
-          <?php foreach($comments as $c): ?>
-            <div class="bg-white/20 p-4 rounded-lg text-gray-100 shadow-sm hover:bg-white/30 transition-all">
-              <?= htmlspecialchars($c['email']) . ': ' . htmlspecialchars($c['description']) ?>
-            </div>
-          <?php endforeach; ?>
-        <?php else: ?>
-          <p class="text-gray-400 italic">Encara no hi ha comentaris.</p>
-        <?php endif; ?>
-      </div>
+    <!-- TÍTOL + AUTOR -->
+    <h1 class="text-4xl font-extrabold text-blue-800 mb-2 text-center drop-shadow">
+      <?= htmlspecialchars($book['title']) ?>
+    </h1>
 
-      <?php if(isset($_SESSION['user'])): ?>
-        <form action="/?url=comments/store" method="post" class="mt-6">
-          <input type="hidden" name="book_id" value="<?= $book['id'] ?>"><input type="hidden" name="book_id" value="<?= $book['id'] ?>">
-          <textarea name="description" class="w-full p-3 rounded-lg bg-white/10 text-white placeholder-gray-300 focus:ring-2 focus:ring-yellow-400 resize-none" placeholder="Escriu un comentari..."></textarea>
-          <div class="flex justify-between mt-6">
-            <a href="/?url=books/index" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium px-5 py-2 rounded-lg transition">⬅ Tornar</a>
-            <button class="mt-3 bg-yellow-400 text-black px-6 py-2 rounded-lg font-semibold hover:bg-yellow-300 transition transform hover:scale-105 shadow-md">
-              Afegir comentari
-            </button>
+    <p class="text-center text-gray-700 mb-10 text-lg font-medium">
+      <?= htmlspecialchars($book['author']) ?> · <?= htmlspecialchars($book['year']) ?>
+    </p>
+
+    <!-- COMENTARIS -->
+    <h2 class="text-2xl font-bold text-blue-700 mb-5">Comentaris</h2>
+
+    <div class="space-y-4 mb-10">
+      <?php if(!empty($comments)): ?>
+        <?php foreach($comments as $c): ?>
+          <div class="bg-white/80 p-4 rounded-xl shadow border border-gray-200">
+            <p class="text-gray-800 leading-relaxed">
+              <span class="font-semibold text-blue-700"><?= htmlspecialchars($c['email']) ?>:</span>
+              <?= htmlspecialchars($c['description']) ?>
+            </p>
           </div>
-        </form>
-
+        <?php endforeach; ?>
       <?php else: ?>
-        <p class="mt-6 text-gray-300">Inicia sessió per afegir comentaris.</p>
+        <p class="text-gray-500 italic">Encara no hi ha comentaris.</p>
       <?php endif; ?>
     </div>
+
+    <!-- FORMULARI PER AFEGIR COMENTARI -->
+    <?php if(isset($_SESSION['user'])): ?>
+      <form action="/?url=comments/store" method="post" class="space-y-6">
+        <input type="hidden" name="book_id" value="<?= $book['id'] ?>">
+
+        <div>
+          <label class="text-blue-900 font-semibold">Afegeix un comentari</label>
+          <textarea
+            name="description"
+            placeholder="escriu un comentari..."
+            class="mt-1 w-full border border-gray-300 px-4 py-3 rounded-xl shadow-sm focus:ring-2 focus:ring-blue-400 focus:outline-none transition resize-none"
+          ></textarea>
+        </div>
+
+        <div class="flex justify-between pt-4">
+          <a href="/?url=books/index"
+             class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-6 py-3 rounded-xl shadow transition transform hover:scale-105">
+            ⬅ Tornar
+          </a>
+
+          <button
+            class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow-lg transition transform hover:scale-105 hover:-translate-y-1">
+            Afegir comentari
+          </button>
+        </div>
+      </form>
+
+    <?php else: ?>
+      <p class="text-gray-700 text-center mt-6 font-medium">
+        Inicia sessió per afegir comentaris.
+      </p>
+    <?php endif; ?>
+
   </div>
-</main>
+</div>
+
+<?php require __DIR__ . '/../partials/footer.php'; ?>
